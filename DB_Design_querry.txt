@@ -1,0 +1,51 @@
+create table users(
+user_id int primary key,
+username varchar(25),
+email varchar(25) 
+ );
+
+ create table students(
+ std_id int primary key,
+ user_id int,
+ foreign key (user_id) references users(user_id),
+ f_name varchar(25),
+ adrs varchar(25),
+ phone varchar(10),
+ course_id int,
+INDEX (course_id),
+ course_name varchar(30)
+ );
+ 
+create table mentors(
+ mentor_id int primary key,
+ user_id int,
+ foreign key (user_id) references users(user_id),
+ name varchar(25),
+ course_id int,
+ foreign key (course_id) references students(course_id)
+);
+
+create table sessions(
+session_id int primary key,
+user_id int,
+ foreign key (user_id) references users(user_id),
+course_id int,
+ foreign key (course_id) references students(course_id),
+ mentor_id int,
+ foreign key (mentor_id) references mentors(mentor_id)
+);
+ 
+create table tasks(
+task_id int primary key,
+session_id int,
+foreign key (session_id) references sessions(session_id)
+);
+
+create table querry(
+querry_id int primary key,
+session_id int,
+foreign key (session_id) references sessions(session_id),
+task_id int,
+foreign key (task_id) references tasks(task_id)
+
+);
